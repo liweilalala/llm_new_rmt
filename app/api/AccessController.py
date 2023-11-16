@@ -2,11 +2,12 @@ from flask import request, jsonify
 from . import api
 import json
 from flask_jwt_extended import create_access_token, unset_jwt_cookies, jwt_required, get_jwt
-from constants import user, passwd
+from .constants import user, passwd
 
 
 @api.route('/api/getToken', methods=['POST'])
 def login():
+    print("接收到请求")
     data_raw = request.get_data()
     try:
         data = json.loads(data_raw)

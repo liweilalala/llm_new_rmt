@@ -12,8 +12,13 @@ def api_test(my_api: str, method: str, data: dict):
     }
     if method == "POST":
         result = requests.post(url, data=json.dumps(data), headers=headers, timeout=3000)
-        print(result.text)
-        print(result.content)
+
+        try:
+            result_data = json.loads(result.text)
+        except:
+            print("json解析失败")
+            result_data = result.text
+        print(result_data)
     else:
         return
 
