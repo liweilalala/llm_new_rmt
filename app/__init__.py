@@ -8,17 +8,13 @@ def create_app():
     # 设置好jwt加密用的key
     app.config["JWT_SECRET_KEY"] = "khMm2pEemLaF7pRw"
     app.config['SECRET_KEY'] = "HRuUpy4tOQSMBFWw"
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=1)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=10)
     register_blueprint(app)
     jwt = JWTManager()
 
     @jwt.expired_token_loader
     def my_expired_token_callback(jwt_header, jwt_payload):
         return jsonify({"code": 401, "msg": "token已过期，请重新获取。"}), 401
-
-    @jwt.unauthorized_loader
-    def unauthorized_token_callback(jwt_header, jwt_payload):
-        return jsonify({"code": 402, "msg": "token验证失败"}), 402
 
     jwt.init_app(app)
     return app

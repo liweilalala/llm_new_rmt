@@ -9,7 +9,7 @@ def api_test(my_api: str, method: str, data: dict):
     url = base_url + my_api
     headers = {
         "Content-Type": "application/json; charset=UTF-8",
-        # "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDEyMDg1NywianRpIjoiZWVkNTRmYjgtODdkYi00NmEzLTlkY2EtMmVmZmJhNGQ3OWRiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDAxMjA4NTcsImV4cCI6MTcwMDEyMDkxN30.hgSQBNTa-9i0X5vYudRNXs13G5gMxXqIzmoexE5U58Y"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDEyMjg1MiwianRpIjoiNDRiYWM3ZDgtMzA1OC00NDBlLWI1N2ItYTI2OTQ5ZmI4MjVlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDAxMjI4NTIsImV4cCI6MTcwMDk4Njg1Mn0._JBcfzI2EW7ue_MehQ51nFvrSEG5HGVOlWsPxkOBxRU"
     }
     if method == "POST":
         result = requests.post(url, data=json.dumps(data), headers=headers, timeout=3000)
