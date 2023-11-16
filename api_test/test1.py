@@ -25,9 +25,10 @@ def api_test(my_api: str, method: str, data: dict):
 
 
 if __name__ == "__main__":
-    data1 = {
-        "user": "test",
-        "passwd": "123456"
-    }
-    api_test("api/getToken", "POST", data1)
+    # data1 = {
+    #     "user": "test",
+    #     "passwd": "123456"
+    # }
+    data1 = {}
+    api_test("api/test", "POST", data1)
 

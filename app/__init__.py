@@ -8,7 +8,7 @@ def create_app():
     # 设置好jwt加密用的key
     app.config["JWT_SECRET_KEY"] = "khMm2pEemLaF7pRw"
     app.config['SECRET_KEY'] = "HRuUpy4tOQSMBFWw"
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=10)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=1)
     register_blueprint(app)
     jwt = JWTManager()
 
