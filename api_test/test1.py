@@ -25,10 +25,14 @@ def api_test(my_api: str, method: str, data: dict):
 
 
 if __name__ == "__main__":
+    # data1 = {
+    #     "user": "test",
+    #     "passwd": "123456"
+    # }
     data1 = {
-        "user": "test",
-        "passwd": "123456"
+        "title": "111",
+        "type": 1,
+        "input": "新华社旧金山11月15日电（记者倪四义　颜亮　吴晓凌）当地时间11月15日，国家主席习近平在美国旧金山斐洛里庄园同美国总统拜登举行中美元首会晤。两国元首就事关中美关系的战略性、全局性、方向性问题以及事关世界和平和发展的重大问题坦诚深入地交换了意见。"
     }
-    # data1 = {}
-    api_test("api/test", "POST", data1)
+    api_test("api/generate", "POST", data1)
 
