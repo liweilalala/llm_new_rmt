@@ -22,6 +22,10 @@ def use_llm(my_text: str, system_message: str = "") -> dict:
     new_message = {}
     try:
         result = requests.post(url, data=json.dumps(data), headers=headers, timeout=3000)
+        if result.status_code in [500, 502]:
+            print("LLM请求失败")
+            new_message['answer'] = ""
+            new_message['score'] = None
     except requests.exceptions.ConnectionError:
         print("LLM请求失败")
         new_message['answer'] = ""
@@ -30,13 +34,9 @@ def use_llm(my_text: str, system_message: str = "") -> dict:
         print("LLM请求失败")
         new_message['answer'] = ""
         new_message['score'] = None
-    if result.status_code in [500, 502]:
-        print("LLM请求失败")
-        new_message['answer'] = ""
-        new_message['score'] = None
     else:
         new_message['answer'] = result.text
-        new_message['score'] = get_score(result.text, user)
+        new_message['score'] = get_score(result.text)
     return new_message
 
 
@@ -91,7 +91,7 @@ def create_task_loop(input_list: list, system_message: str = "",
                      use_concurrent: bool = True):
     err_count = 0
     while True:
-        results = create_task(input_list, system_message, concurrent)
+        results = create_task(input_list, system_message, use_concurrent)
         if len(results) > 1:
             best_result = list(sorted(results, key=lambda item: item["score"], reverse=True))[0]
             return best_result
