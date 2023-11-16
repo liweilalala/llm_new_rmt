@@ -15,16 +15,16 @@ def temp_write():
         return jsonify({"code": 403, "data": None, "msg": f"格式错误，{e}"}), 403
     try:
         temp_prompts = generate_prompt(temp_text=data['temp_content'])
+        print(f"prompts生成结果：{temp_prompts}")
         query_list = []
         error_prompt_count = 0
         for prompt in temp_prompts:
-            if prompt.instruction.startswith("<!doctype html>"):
+            if prompt['instruction'].startswith("<!doctype html>"):
                 error_prompt_count += 1
                 pass
-            one_query = prompt.instruction + "请根据以上文本风格和特征，改写下面这篇文章，使其符合相似的风格。" + data[
-                "user_input"]
+            one_query = prompt['instruction'] + "请根据以上文本风格和特征，改写下面这篇文章，使其符合相似的风格。" + data["user_input"]
             query_list.append(one_query)
-        result = create_task_loop(query_list)
+        result = create_task_loop(query_list)['answer']
     except Exception as e:
         print(f"模板生成失败，原因：{e}")
         try:
