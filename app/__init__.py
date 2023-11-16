@@ -15,6 +15,11 @@ def create_app():
     @jwt.expired_token_loader
     def my_expired_token_callback(jwt_header, jwt_payload):
         return jsonify({"code": 401, "msg": "token已过期，请重新获取。"}), 401
+
+    @jwt.unauthorized_loader
+    def unauthorized_token_callback(jwt_header, jwt_payload):
+        return jsonify({"code": 402, "msg": "token验证失败"}), 402
+
     jwt.init_app(app)
     return app
 
