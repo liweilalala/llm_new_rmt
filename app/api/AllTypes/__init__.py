@@ -1,5 +1,5 @@
 import numpy as np
-from prompts import conference_prompt, leader_speech_prompt, strategic_signing_prompt, exhibition_prompt
+from .prompts import conference_prompt, leader_speech_prompt, strategic_signing_prompt, exhibition_prompt
 # import sys
 # import os
 
