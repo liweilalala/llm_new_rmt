@@ -12,15 +12,16 @@ def api_test(my_api: str, method: str, data: dict):
     }
     if method == "POST":
         result = requests.post(url, data=json.dumps(data), headers=headers, timeout=3000)
-        print(result)
+        print(result.text)
+        print(result.content)
     else:
         return
 
 
 if __name__ == "__main__":
-    data = {
+    data1 = {
         "user": "test",
         "passwd": "123456"
     }
-    api_test("api/getToken", "POST", data)
+    api_test("api/getToken", "POST", data1)
 
