@@ -15,7 +15,7 @@ def ai_write():
     try:
         data_type = type_list[int(data["type"])]()
         result = data_type.generate(user_input=data["input"])
-    except Exhibition as e:
+    except Exception as e:
         print(f"生成失败，原因：{e}")
         return jsonify({"code": 405, "msg": f"生成失败，原因：{e}"}), 405
     return jsonify({"code": 200, "data": {"output": result}, "msg": "生成成功"})
