@@ -1,10 +1,13 @@
 import numpy as np
 from prompts import conference_prompt, leader_speech_prompt, strategic_signing_prompt, exhibition_prompt
-import sys
-import os
+# import sys
+# import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
-from utils.LLM import create_task_loop
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+# from utils.LLM import create_task_loop
+
+from app.utils.LLM import create_task_loop
+
 
 def calculate_levenshtein_distance(text1, text2):
     m, n = len(text1), len(text2)
@@ -57,7 +60,7 @@ class LeaderSpeech:
             if "谢谢" in input_section and len(input_section) < 150:
                 result_paragraphs[i] = ""
                 continue
-            for delete_section in result1.split("\n"):
+            for delete_section in result_text.split("\n"):
                 similarity = calculate_levenshtein_distance(input_section, delete_section)
                 if similarity < 0.8:
                     result_paragraphs[i] = ""
@@ -71,6 +74,33 @@ class LeaderSpeech:
         result_paragraphs = [section for section in result_paragraphs if section != ""]
         new_result = "\n\n".join(result_paragraphs)       # 正常的输出
         return new_result
+
+
+class StrategicSigning:
+    def generate(self, user_input: str):
+        query_list = []
+        for i in range(3):
+            query = strategic_signing_prompt["prompts"][i].format(common_message=conference_prompt["common_message"],
+                                                                  user_input=user_input)
+            query_list.append(query)
+        result_message = create_task_loop(query_list)
+        if result_message is None:
+            raise Exception("生成失败，请重试")
+        return result_message["answer"]
+
+
+class Exhibition:
+    def generate(self, user_input: str):
+        query_list = []
+        for i in range(3):
+            query = exhibition_prompt["prompts"][i].format(common_message=conference_prompt["common_message"],
+                                                           user_input=user_input)
+            query_list.append(query)
+        result_message = create_task_loop(query_list)
+        if result_message is None:
+            raise Exception("生成失败，请重试")
+        return result_message["answer"]
+
 
 if __name__ == "__main__":
     print(conference_prompt)

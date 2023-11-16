@@ -21,4 +21,9 @@ def login():
         return jsonify({"code": 406, "msg": "用户名或密码错误"}), 406
 
 
+@api.route('/api/test', methods=['POST'])
+@jwt_required()
+def test():
+    return jsonify({})
+
 
