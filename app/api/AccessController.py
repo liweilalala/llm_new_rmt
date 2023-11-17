@@ -1,4 +1,5 @@
 from flask import request, jsonify
+import datetime
 from . import api
 import json
 from flask_jwt_extended import create_access_token, unset_jwt_cookies, jwt_required, get_jwt
@@ -9,16 +10,24 @@ from .constants import user, passwd
 def login():
     print("接收到请求")
     data_raw = request.get_data()
+    print(data_raw)
     try:
         data = json.loads(data_raw)
     except json.decoder.JSONDecodeError as e:
-        return jsonify({"code": 403, "data": None, "msg": "格式错误"}), 403
+        print(f"格式错误：{e}")
+        return json.dumps({"code": 403, "data": None, "msg": "格式错误"}, ensure_ascii=False), 403
     if data['user'] == user and data['passwd'] == passwd:
-        access_token = create_access_token(identity=data["user"])
-        return jsonify({"code": 200, "data": {"token": access_token}, "msg": "请求成功"})
+        create_time = datetime.datetime.now().replace(microsecond=0) 
+        expired_timestamp = datetime.datetime.timestamp(create_time + datetime.timedelta(days=10))
+        access_token = create_access_token(identity=data["user"], 
+                                           additional_claims={'expired_timestamp': expired_timestamp})
+        return json.dumps({"code": 200, 
+                           "data": {"token": access_token},
+                           "token_remain_seconds": datetime.timedelta(days=10).total_seconds(),
+                           "msg": "请求成功"}, ensure_ascii=False)
     else:
         print("用户名或密码错误")
-        return jsonify({"code": 406, "msg": "用户名或密码错误"}), 406
+        return json.dumps({"code": 406, "msg": "用户名或密码错误"}, ensure_ascii=False), 406
 
 
 @api.route('/api/test', methods=['POST'])
