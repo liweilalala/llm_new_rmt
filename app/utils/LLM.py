@@ -13,7 +13,7 @@ def use_llm(my_text: str, system_message: str = "") -> dict:
     data = {
         "sents": my_text,
         "system": system_message,
-        "usr": "hujie",
+        "usr": "rongmeiti",
         "region": "0"
     }
     headers = {
@@ -49,7 +49,7 @@ def get_score(candidate: str):
     data = {
         "query": judge_instruction,
         "response": candidate,
-        "usr": "hujie",
+        "usr": "rongmeiti",
         "region": "0"
     }
     try:
