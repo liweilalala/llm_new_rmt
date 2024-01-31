@@ -28,4 +28,4 @@ def ai_write():
         log.error(f"生成失败，原因：{e}")
         return json.dumps({"code": 405, "msg": f"生成失败，原因：{e}"}, ensure_ascii=False), 405
     result_dict = {"code": 200, "data": {"output": result}, "token_remain_seconds": remain_seconds, "msg": "生成成功"}
-    return json.dumps(result_dict, ensure_ascii=False)
+    return json.dumps(result_dict, ensure_ascii=False), 200

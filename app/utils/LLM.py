@@ -7,9 +7,9 @@ import sys
 import os
 
 
-def use_llm(my_text: str, system_message: str = "") -> dict:
-
-    url = "http://127.0.0.1:14240/continue_write"
+def use_llm(my_text: str,
+            system_message: str = "",
+            url: str = "http://127.0.0.1:14240/continue_write") -> dict:
     data = {
         "sents": my_text,
         "system": system_message,
