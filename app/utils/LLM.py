@@ -41,7 +41,7 @@ def use_llm(my_text: str, system_message: str = "") -> dict:
 
 
 def get_score(candidate: str):
-    url = "http://175.102.135.226:14244/reward"
+    url = "http://10.10.1.102:14244/reward"
     judge_instruction = '''请撰写一篇会议类新闻稿件'''
     headers = {
         "Content-Type": "application/json; charset=UTF-8"
